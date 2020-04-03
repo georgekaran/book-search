@@ -3,3 +3,20 @@
   min-height: 100vh;
   width: 100%;
 }
+
+.base_input_border {
+  border: 1px solid #e6e6e6 !important;
+}
+
+.logo {
+  flex-basis: 250px;
+}
+
+.search {
+  flex-basis: 100%;
+}
+
+.btn-search {
+  flex-basis: auto;
+  display: flex;
+}
