@@ -8,12 +8,17 @@ import {
 } from "reactstrap";
 
 import { useStateValue } from "../../context/Context";
+import { updateYears } from '../../action/appAction';
 
 const YearPicker = ({ register, name }) => {
   const [, contextDispatch] = useStateValue();
 
   const handleOnBlur = (moment) => {
-    contextDispatch({ type: 'UPDATE_YEARS', name, year: moment.year()})
+    if (moment) {
+      contextDispatch(updateYears(name, moment.year()))
+    } else {
+      contextDispatch(updateYears(name, ""))
+    }
   };
   
   return (
@@ -27,7 +32,7 @@ const YearPicker = ({ register, name }) => {
           </InputGroupAddon>
           <ReactDatetime
             inputProps={{
-              placeholder: "Date Picker Here",
+              placeholder: "Ano",
               name: name,
               ref: register,
               type: "number"

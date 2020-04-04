@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
+
 import { useStateValue } from '../context/Context';
+import { updatePageProps } from '../action/appAction';
 
 const useListPagination = () => {
   const elementsPerPage = 10;
@@ -11,16 +13,21 @@ const useListPagination = () => {
     return book.title.toLowerCase().includes(search) || book.author.toLowerCase().includes(search) || book.isbn.includes(search)
   }
 
-  const hasBookDate = (book, yearIni, yearEnd) => {
-    let hasDate = true;
+  const hasBookYear = (book, yearIni, yearEnd) => {
+    let hasYear = true;
     if (yearIni)
-      hasDate = hasDate && (book.year >= Number(yearIni))
+      hasYear = hasYear && (book.year >= Number(yearIni))
     if (yearEnd)
-      hasDate = hasDate && (book.year <= Number(yearEnd)) 
-    return hasDate
+      hasYear = hasYear && (book.year <= Number(yearEnd)) 
+    return hasYear
   }
 
   useEffect(() => {
+    if (list.length === 0) {
+      setListPage([])
+      return;
+    }
+      
     if (list.length > 0) {
       const initialElements = elementsPerPage * (page - 1);
       const finalElements = (elementsPerPage * page);
@@ -33,14 +40,12 @@ const useListPagination = () => {
       const searchLowerCase = search.toLowerCase();
 
       const listHasSearch = listOriginal.filter(book => hasBookSearch(book, searchLowerCase));
-      const listHasYears = listHasSearch.filter(book => hasBookDate(book, yearIni, yearEnd))
-      const pageProps = { page: 1, totalPages: Math.ceil(listHasYears.length  / 10)}
+      const listHasYears = listHasSearch.filter(book => hasBookYear(book, yearIni, yearEnd))
+      const initialPage = 1;
+      const totalPages = Math.ceil(listHasYears.length  / 10);
 
       setList(listHasYears);
-      contextDispatch({
-        type: 'UPDATE_PAGE_PROPS',
-        pageProps
-      })
+      contextDispatch(updatePageProps(initialPage, totalPages))
     }
   }, [listOriginal, search, yearIni, yearEnd, contextDispatch])
   

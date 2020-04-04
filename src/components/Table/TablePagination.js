@@ -8,6 +8,7 @@ import {
 } from "reactstrap";
 
 import { useStateValue } from "../../context/Context";
+import { updatePage } from "../../action/appAction";
 
 const TablePagination = () => {
   const [{ page, totalPages }, contextDispatch] = useStateValue();
@@ -34,7 +35,7 @@ const TablePagination = () => {
   }, [totalPages, page]);
 
   const handlePaginationItemClick = (pageToGo) => {
-    contextDispatch({ type: "UPDATE_PAGE", page: pageToGo });
+    contextDispatch(updatePage(pageToGo));
   };
 
   const shouldRenderLastPagination = useCallback(() => {

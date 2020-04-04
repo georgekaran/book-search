@@ -21,8 +21,8 @@ const appReducer = (state = appDefaultState, action) => {
     case "UPDATE_PAGE_PROPS":
       return {
         ...state,
-        page: action.pageProps.page,
-        totalPages: action.pageProps.totalPages,
+        page: action.page,
+        totalPages: action.totalPages,
       };
     case "UPDATE_PAGE":
       return {
