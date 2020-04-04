@@ -7,7 +7,14 @@ import {
   InputGroup,
 } from "reactstrap";
 
-const YearPicker = props => {
+import { useStateValue } from "../../context/Context";
+
+const YearPicker = ({ register, name }) => {
+  const [, contextDispatch] = useStateValue();
+
+  const handleOnBlur = (moment) => {
+    contextDispatch({ type: 'UPDATE_YEARS', name, year: moment.year()})
+  };
   
   return (
     <>
@@ -20,10 +27,14 @@ const YearPicker = props => {
           </InputGroupAddon>
           <ReactDatetime
             inputProps={{
-              placeholder: "Date Picker Here"
+              placeholder: "Date Picker Here",
+              name: name,
+              ref: register,
+              type: "number"
             }}
             timeFormat={false}
             dateFormat="YYYY"
+            onBlur={handleOnBlur}
           />
         </InputGroup>
       </FormGroup>

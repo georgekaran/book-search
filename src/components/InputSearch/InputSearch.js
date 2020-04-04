@@ -1,16 +1,17 @@
 import React from "react";
 import {
-  Form,
   FormGroup,
   InputGroupAddon,
   InputGroupText,
   Input,
-  InputGroup
+  InputGroup,
 } from "reactstrap";
 
-const InputSearch = ({ className }) => {
+const InputSearch = ({ className, register, name }) => {
   return (
-    <Form className={`navbar-search form-inline mr-3 d-none d-md-flex ml-lg-3 ${className}`}>
+    <div
+      className={`navbar-search form-inline mr-3 d-none d-md-flex ml-lg-3 ${className}`}
+    >
       <FormGroup className="mb-0 w-100">
         <InputGroup className="input-group-alternative w-100">
           <InputGroupAddon addonType="prepend">
@@ -18,10 +19,15 @@ const InputSearch = ({ className }) => {
               <i className="fas fa-search" />
             </InputGroupText>
           </InputGroupAddon>
-          <Input placeholder="Busque livros pelo título autor ou ISBN" type="text" />
+          <Input
+            placeholder="Busque livros pelo título autor ou ISBN"
+            innerRef={register}
+            type="text"
+            name={name}
+          />
         </InputGroup>
       </FormGroup>
-    </Form>
+    </div>
   );
 };
 

@@ -1,15 +1,34 @@
+const data = require("../utils/data.json") || [];
+
 export const appDefaultState = {
+  listOriginal: data,
+  list: data,
   search: "",
   yearIni: null,
-  yearEnd: null
+  yearEnd: null,
+  page: 1,
+  totalPages: 0,
+  handlePaginationChange: () => undefined,
 };
 
 const appReducer = (state = appDefaultState, action) => {
   switch (action.type) {
     case "UPDATE_SEARCH":
+      console.log(action);
       return { ...state, search: action.search };
     case "UPDATE_YEARS":
-        return { ...state, yearIni: action.yearIni, yearEnd: action.yearEnd };
+      return { ...state, [action.name]: action.year };
+    case "UPDATE_PAGE_PROPS":
+      return {
+        ...state,
+        page: action.pageProps.page,
+        totalPages: action.pageProps.totalPages,
+      };
+    case "UPDATE_PAGE":
+      return {
+        ...state,
+        page: action.page
+      };
     default:
       return state;
   }
